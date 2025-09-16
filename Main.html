@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CSV Table</title>
+</head>
+<body>
+  <table id="data-table" border="1"></table>
+
+  <script>
+    async function loadCSV() {
+      const response = await fetch('Data.csv');
+      const text = await response.text();
+      const rows = text.trim().split('\n').map(r => r.split(','));
+      const table = document.getElementById('data-table');
+      rows.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        row.forEach(cell => {
+          const td = document.createElement(i === 0 ? 'th' : 'td');
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        table.appendChild(tr);
+      });
+    }
+    loadCSV();
+  </script>
+</body>
+</html>
